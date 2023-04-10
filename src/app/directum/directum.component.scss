@@ -1,0 +1,94 @@
+.column {
+    width:33%;
+    padding: 15px;
+    display: block;
+    float:left;
+    .in-column {
+        border: 1px solid #ddd;
+        background: #eee;
+        border-radius: 5px;
+        padding: 15px;
+        width:100%;
+        float:left;
+    }
+}
+
+@media (max-width: 1300px) {
+	.column {
+		width: 50%;
+	}
+    .column:last-child {
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+	.column {
+		width: 100%;
+	}
+}
+
+div, button {
+    box-sizing: border-box;
+}
+
+.column-container {
+    display:block;
+}
+
+.block {
+    padding: 15px;
+    display: block;
+    float:left;
+    min-height: 100px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+}
+
+.buttons {
+    width:100%;
+    padding: 5px;
+}
+
+.example-sidenav {
+    padding: 20px;
+}
+
+.example-container {
+    height: calc(100vh - 30px);
+    overflow: auto;
+}
+
+.weather {
+    border-radius: 5px;
+    img {
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+.image {
+    border-radius: 5px;
+    height: 120px;
+}
+
+.widgets {
+    margin-top: 10px;
+    float: left;
+    button {
+        background: #ffffff85;
+        margin-top: 5px;
+        margin-left:5px;
+    }
+
+}
+
+.border {
+    border: 1px solid black;
+    margin:10px;
+    width:100%;
+    padding: 5px;
+}

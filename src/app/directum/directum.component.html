@@ -1,0 +1,118 @@
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <p>Настроить значения</p>
+        <ng-container *ngIf="currentProperty?.display?.text">
+            <mat-form-field>
+                <mat-label>Текст</mat-label>
+                <input matInput placeholder="Введите текст" [(ngModel)]="currentProperty.properties.text" [value]="currentProperty?.properties?.text">
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="currentProperty?.display?.url">
+            <mat-form-field>
+                <mat-label>Добавьте изображение</mat-label>
+                <input matInput placeholder="Добавьте изображение" [(ngModel)]="currentProperty.properties.url" [value]="currentProperty?.properties?.url">
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="currentProperty?.display?.borderWidth">
+            <mat-form-field>
+                <mat-label>Ширина окантовки</mat-label>
+                <input matInput placeholder="Введите ширину окантовки" [(ngModel)]="currentProperty.properties.borderWidth" [value]="currentProperty?.properties?.borderWidth">
+            </mat-form-field>
+        </ng-container>
+        <mat-form-field appearance="fill" *ngIf="currentProperty?.display?.borderStyle">
+            <mat-label>Стиль окантовки</mat-label>
+            <mat-select [(ngModel)]="currentProperty.properties.borderStyle">
+              <mat-option *ngFor="let borderStyle of borderStyles" [value]="borderStyle">
+                <div class="border" [style.border-style] = "borderStyle">{{borderStyle}}</div>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="currentProperty?.display?.width">
+            <mat-label>Ширина</mat-label>
+            <mat-select [(ngModel)]="currentProperty.properties.width">
+              <mat-option *ngFor="let width of widths" [value]="width">
+                <div class="width" [style.width] = "width">{{width}}</div>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="currentProperty?.display?.backgroudColor">
+            <mat-label>Цвет Фона</mat-label>
+            <mat-select [(ngModel)]="currentProperty.properties.backgroudColor">
+              <mat-option *ngFor="let backgroudColor of backgroudColors" [value]="backgroudColor">
+                <div class="width" [style.background] = "'#'+ backgroudColor">{{backgroudColor}}</div>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="currentProperty?.display?.city">
+            <mat-label>Город</mat-label>
+            <mat-select [(ngModel)]="currentProperty.properties.city">
+              <mat-option *ngFor="let item of cities" [value]="item[1]">
+                <div class="width">{{item[0]}}</div>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-drawer>
+    <div class="column-container" cdkDropListGroup>
+        <div class="column" *ngFor="let item of wigets; index as i; ">
+            <div class="in-column" cdkDropList [cdkDropListData]="wigets[i]" (cdkDropListDropped)="drop($event)">
+                <div class="buttons">
+                    <button mat-mini-fab color="accent" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{column: i}">
+                        <mat-icon>plus_one</mat-icon>
+                    </button>
+                </div>
+                <ng-container *ngFor="let widget of item;">
+                    <ng-container *ngIf="widget && widget.type && widget.type ==='block' || widget.type ==='image'">
+                        <div class="widgets {{widget.type}}"
+                            cdkDrag
+                            [style.background] = "'#'+ widget.properties.backgroudColor"
+                            [style.border-width] = "widget.properties.borderWidth + 'px'"
+                            [style.border-style] = "widget.properties.borderStyle"
+                            [style.width] = "widget.properties.width"
+                            [style.background-image] = "'url(\''+widget.properties.url+'\')'"
+                        >
+                        <button type="button" mat-button (click)="changeProperties(widget.uuid,i)">
+                            <mat-icon>list_alt</mat-icon>
+                            <span>Изменить</span>
+                        </button>
+                        <button type="button" mat-button (click)="delete(widget.uuid,i)">
+                            <mat-icon>delete_forever</mat-icon>
+                            <span>Удалить</span>
+                        </button>
+                            {{widget.properties.text}}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="widget && widget.type && widget.type ==='weather'">
+                        <div class="widgets {{widget.type}}"
+                        cdkDrag
+                        [style.width] = "widget.properties.width"
+                        [style.background] = "'#'+ widget.properties.backgroudColor"
+                        [style.border-width] = "widget.properties.borderWidth + 'px'"
+                        [style.border-style] = "widget.properties.borderStyle">
+                            <button type="button" mat-flat-button (click)="changeProperties(widget.uuid,i)">
+                                <mat-icon>list_alt</mat-icon>
+                                <span>Изменить</span>
+                            </button>
+                            <button type="button" mat-flat-button (click)="delete(widget.uuid,i)">
+                                <mat-icon>delete_forever</mat-icon>
+                                <span>Удалить</span>
+                            </button>
+                            <img 
+
+                            src="https://w.bookcdn.com/weather/picture/26_{{widget.properties.city}}_1_20_{{widget.properties.backgroudColor}}_250_{{widget.properties.backgroudColor}}_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=&domid=589&anc_id=91693"  alt="booked.net"/>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <mat-menu #menu="matMenu">
+            <ng-template matMenuContent let-column="column">
+                <button mat-menu-item *ngFor="let wigetType of wigetTypes;"
+                (click)="addWidget(column,wigetType)">
+                <mat-icon>{{wigetType.icon}}</mat-icon>
+                <span>Добавить {{wigetType.text}}</span>
+                </button>
+            </ng-template>
+        </mat-menu>
+    </div>
+</mat-drawer-container>
+
