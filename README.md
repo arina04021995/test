@@ -1,3 +1,10 @@
-Run `npm run start`. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Перед выполнением установите node версии v16.20.0
+Выполните 
+`npm i`. 
+`npm run start`. 
+Перейдите `http://localhost:4200/`.
+
+
+
 
 
