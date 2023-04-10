@@ -4,6 +4,8 @@
 `npm run start`. 
 Перейдите `http://localhost:4200/`.
 
+![Визуал клиентского интерфейса](./readme.png)
+
 
 
 
